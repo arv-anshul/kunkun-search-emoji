@@ -44,6 +44,7 @@ class Emoji extends TemplateUiCommand {
   async load(): Promise<void> {
     // UI tweaks
     ui.setSearchBarPlaceholder("Search Emoji Name...");
+    await ui.render(new List.List({ items: [] })); // render an empty list to render skeleton view quickly
 
     let emojiSections = getEmojisSections();
     return ui.render(
@@ -71,6 +72,14 @@ class Emoji extends TemplateUiCommand {
                 value: "simple-icons:github",
               }),
             }),
+            new Action.Action({
+              title: "Copy Emoji Name",
+              value: "copy-emoji-name",
+              icon: new Icon({
+                type: IconEnum.Iconify,
+                value: "tabler:copy",
+              }),
+            }),
           ],
         }),
       })
@@ -79,10 +88,24 @@ class Emoji extends TemplateUiCommand {
 
   onActionSelected(value: string): Promise<void> {
     switch (value) {
-      // case "copy-slug":
-      //     return clipboard.writeText()
       case "open-ext-repo":
         return open.url("https://github.com/arv-anshul/kunkun-search-emoji");
+      case "copy-emoji-name":
+        if (this.highlightedListItemValue) {
+          return clipboard
+            .writeText(this.highlightedListItemValue)
+            .then(() => {
+              toast.success(`Copied: ${this.highlightedListItemValue}`);
+            })
+            .catch((e) => {
+              console.error(e);
+              toast.error(
+                `Error while copying emoji ${this.highlightedListItemValue}!`
+              );
+            });
+        } else {
+          return toast.error("No emoji selected!");
+        }
       default:
         toast.error("Action Fallback!");
         return Promise.resolve();

@@ -3,6 +3,10 @@
   "name": "kunkun-search-emoji",
   "version": "0.0.1",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arv-anshul/kunkun-search-emoji"
+  },
   "type": "module",
   "kunkun": {
     "name": "Search Emoji",
