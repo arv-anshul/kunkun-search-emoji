@@ -5,7 +5,6 @@ import {
   Icon,
   IconEnum,
   List,
-  Markdown,
   open,
   TemplateUiCommand,
   toast,
@@ -50,17 +49,6 @@ class Emoji extends TemplateUiCommand {
     return ui.render(
       new List.List({
         sections: emojiSections,
-        detail: new List.ItemDetail({
-          children: [
-            new Markdown("# Emoji Extension"),
-            new Markdown(`## Selected Emoji: ...`),
-            new Markdown(`Yet to implement...`),
-            new Markdown(
-              "### Author is [@arv-anshul](https://github.com/arv-anshul)"
-            ),
-          ],
-          width: 50,
-        }),
         actions: new Action.ActionPanel({
           title: "Emoji Action",
           items: [
