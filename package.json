@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schema.kunkun.sh",
+  "name": "kunkun-search-emoji",
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "module",
+  "kunkun": {
+    "name": "Search Emoji",
+    "shortDescription": "Extension to search emoji using Kunkun",
+    "longDescription": "A Kunkun extension to search and copy emoji in clipboard faster than any native method.",
+    "identifier": "kunkun-search-emoji",
+    "permissions": [
+      "clipboard:write-text",
+      {
+        "permission": "open:url",
+        "allow": [
+          {
+            "url": "https://github.com/arv-anshul/kunkun-search-emoji"
+          }
+        ]
+      }
+    ],
+    "demoImages": [],
+    "icon": {
+      "type": "iconify",
+      "value": "fluent:emoji-20-filled",
+      "hexColor": "#FFFF00"
+    },
+    "templateUiCmds": [
+      {
+        "name": "Search Emoji",
+        "main": "dist/index.js",
+        "cmds": []
+      }
+    ]
+  },
+  "scripts": {
+    "dev": "bun build.ts dev",
+    "build": "bun build.ts"
+  },
+  "dependencies": {
+    "@kksh/api": "0.1.3",
+    "i18next": "^23.15.1",
+    "unicode-emoji-json": "^0.8.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "./dist",
+    ".gitignore"
+  ]
+}
