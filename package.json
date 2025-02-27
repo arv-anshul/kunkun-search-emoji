@@ -24,7 +24,9 @@
         ]
       }
     ],
-    "demoImages": [],
+    "demoImages": [
+      "https://raw.githubusercontent.com/arv-anshul/kunkun-search-emoji/refs/heads/main/public/screenshot.png"
+    ],
     "icon": {
       "type": "iconify",
       "value": "fluent:emoji-20-filled",
