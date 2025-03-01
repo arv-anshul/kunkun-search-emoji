@@ -10,50 +10,43 @@ import {
   toast,
   ui,
 } from "@kksh/api/ui/template";
-import emojiGroup from "unicode-emoji-json/data-by-group.json";
+import emojiRecord from "emojilib";
+import startCase from "lodash/startCase";
 
-function getEmojisSections(): List.Section[] {
-  let sections = [];
-  for (const category of emojiGroup) {
-    let items = [];
-    for (const emoji of category.emojis) {
-      items.push(
-        new List.Item({
-          title: emoji.name,
-          value: emoji.emoji,
-          icon: new Icon({
-            type: IconEnum.Text,
-            value: emoji.emoji,
-            bgColor: "#000",
-          }),
-        })
-      );
-    }
-    sections.push(
-      new List.Section({
-        title: category.name,
-        items: items,
+function getEmojis(): List.Item[] {
+  let items = [];
+  for (const [emoji, keywords] of Object.entries(emojiRecord)) {
+    items.push(
+      new List.Item({
+        title: startCase(keywords[0]),
+        value: emoji,
+        keywords: keywords,
+        icon: new Icon({
+          type: IconEnum.Text,
+          value: emoji,
+          bgColor: "#0000",
+        }),
       })
     );
   }
-  return sections;
+  return items;
 }
 
 class Emoji extends TemplateUiCommand {
   async load(): Promise<void> {
     // UI tweaks
     ui.setSearchBarPlaceholder("Search Emoji Name...");
-    await ui.render(new List.List({ items: [] })); // render an empty list to render skeleton view quickly
 
-    let emojiSections = getEmojisSections();
+    let emojis = getEmojis();
     return ui.render(
       new List.List({
-        sections: emojiSections,
+        items: emojis,
+        defaultAction: "copy-emoji-name",
         actions: new Action.ActionPanel({
           title: "Emoji Action",
           items: [
             new Action.Action({
-              title: "Open Extenstion Repo",
+              title: "Open Extension Repo",
               value: "open-ext-repo",
               icon: new Icon({
                 type: IconEnum.Iconify,
@@ -74,7 +67,7 @@ class Emoji extends TemplateUiCommand {
     );
   }
 
-  onActionSelected(value: string): Promise<void> {
+  async onActionSelected(value: string): Promise<void> {
     switch (value) {
       case "open-ext-repo":
         return open.url("https://github.com/arv-anshul/kunkun-search-emoji");
